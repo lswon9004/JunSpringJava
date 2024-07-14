@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Bar클래스를 id - bar로 bean 생성-->
+	<bean id="bar" class="spring.di.Bar" />
+	<bean id="bar2" class="spring.di.Bar" autowire-candidate="false"/>
+	<!-- Baz클래스를 id - baz로 bean 생성-->
+	<bean id="baz" class="spring.di.Baz" init-method="start" destroy-method="stop"/>
+	<!--<bean id="foo" class="spring.di.Foo">
+		<constructor-arg>
+			<ref bean="bar"/>
+		</constructor-arg>
+		<constructor-arg ref="baz"/>
+	</bean>-->
+	<bean id="foo" class="spring.di.Foo">
+		<constructor-arg ref="bar" />
+		<constructor-arg ref="baz" />
+		<constructor-arg>
+			<value>hello</value>
+		</constructor-arg>
+		<constructor-arg value="1" />
+	</bean>
+	<bean id="footest" class="spring.di.Foo">
+		<constructor-arg value="hi"/>
+		<constructor-arg value="10"/>
+	</bean>
+<!--	<bean id="fooo" class="spring.di.Fooo">
+		<property name="bar" ref="bar"/>
+		<property name="str" value="안녕"/>
+		<property name="i" value="100"/>
+	</bean>-->
+	<!--<bean id="fooo" class="spring.di.Fooo"
+	 p:bar-ref="bar" p:str="hola" p:i="1000"/>-->
+	 <bean id="fooo" class="spring.di.Fooo" autowire="byType" p:str="안녕" p:i="1000"/>
+	<bean id="fooLookup" class="spring.di.FooLookup">
+		<lookup-method name="getBaz" bean="baz"/>
+	</bean>
+</beans>
